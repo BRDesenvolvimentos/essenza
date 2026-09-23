@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essenza - Controle de Estoque</title>
+    <!-- Tailwind CSS para deixar o visual bonito automaticamente -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Biblioteca do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-4 text-indigo-600">📦 Painel de Estoque - Essenza</h1>
+        <p id="status-conexao" class="text-gray-600 font-semibold animate-pulse">Testando conexão com o banco de dados...</p>
+    </div>
+
+    <script>
+        // === COLOQUE SUAS CHAVES AQUI ===
+        const supabaseUrl = 'midlkoozyzhngzzvjisc';
+        const supabaseKey = 'sb_publishable_pnAQ_uv8V_3IZ5nr2Klyxw_gFE0f-Vt';
+        // =================================
+        
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function testarConexao() {
+            try {
+                // Tenta puxar a lista de produtos (mesmo que esteja vazia)
+                const { data, error } = await supabase.from('produtos').select('*').limit(1);
+                
+                if (error) throw error;
+                
+                const statusElement = document.getElementById('status-conexao');
+                statusElement.innerHTML = "✅ Conectado com sucesso ao Supabase! O banco está pronto.";
+                statusElement.classList.remove('text-gray-600', 'animate-pulse');
+                statusElement.classList.add('text-green-600');
+            } catch (error) {
+                const statusElement = document.getElementById('status-conexao');
+                statusElement.innerHTML = "❌ Erro ao conectar: " + error.message;
+                statusElement.classList.remove('text-gray-600', 'animate-pulse');
+                statusElement.classList.add('text-red-600');
+            }
+        }
+
+        testarConexao();
+    </script>
+</body>
+</html>
