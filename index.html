@@ -14,19 +14,19 @@
         <h1 class="text-3xl font-bold mb-4 text-indigo-600">📦 Painel de Estoque - Essenza</h1>
         <p id="status-conexao" class="text-gray-600 font-semibold animate-pulse">Testando conexão com o banco de dados...</p>
     </div>
-
-    <script>
+<script>
         // === COLOQUE SUAS CHAVES AQUI ===
         const supabaseUrl = 'https://midlkoozyzhngzzvjisc.supabase.co';
         const supabaseKey = 'sb_publishable_pnAQ_uv8V_3IZ5nr2Klyxw_gFE0f-Vt';
         // =================================
         
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Alterado de "const supabase" para "const clienteSupabase"
+        const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         async function testarConexao() {
             try {
-                // Tenta puxar a lista de produtos (mesmo que esteja vazia)
-                const { data, error } = await supabase.from('produtos').select('*').limit(1);
+                // Alterado aqui também
+                const { data, error } = await clienteSupabase.from('produtos').select('*').limit(1);
                 
                 if (error) throw error;
                 
@@ -44,5 +44,6 @@
 
         testarConexao();
     </script>
+
 </body>
 </html>
